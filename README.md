@@ -29,6 +29,32 @@ threat-intel-api was written with the following business rules in place:
 
 If a client fails to acknowledge the messages they receive, in-order, the API will terminate the connection.
 
+# Simple Curl Example
+
+curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13" -H "Authorization: Token <YOUR TOKEN>"  https://tiapi.quad9.net >> output.txt
+
+If it is working you will see output like:
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 14940    0 14940    0     0   1867      0 --:--:--  0:00:08 --:--:--     0
+
+Sends to a file called output.txt 
+
+Exmple single entry:
+
+{"id":"6004","qname":"blockeddomain.example.com","qtype":"TXT","timestamp":"2019-05-24T06:29:18.843081648Z","city":"AQ","region":"AQ","country":"AQ"}
+
+id = unique id for a single record 
+qname = domain that the user queried for
+qtype = type of DNS record 
+timestamp = time/date of the query 
+city = city that the query originated from (or closest with the minimum population
+region = region that the query originated from
+country = two character country code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)that the query originated from
+
+Note: We use MaxMind for geographic lookups but we snap locations to the center of the closest city that is above the minimum population - it never moves out of a region (typically a country or nation) but you will not get granular geographic information for small cities. This is to ensure end user privacy.  
+
+
 # Python Example
 
 The example script tia_example.py was written against Python version 3.6.
