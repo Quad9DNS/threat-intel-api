@@ -7,6 +7,9 @@ threat-intel-api is an HTTP/Websocket service that allows threat intelligence (T
 
 Contact Quad9 at support@quad9.net if you are a threat intelligence provider and need a key. 
 
+If a client has multiple threat lists they will be given a separate token for each list.
+
+
 # Starting a Session
 Clients initiate their session by making an HTTP GET request to the service. There is only one endpoint: "/". In this initial request, the client is expected to provide a "bearer" token in the `Authorization`header, like so:
 
@@ -25,4 +28,10 @@ threat-intel-api was written with the following business rules in place:
 -   Multiple clients connecting with the same authorization token is allowed and increases throughput;
 
 If a client fails to acknowledge the messages they receive, in-order, the API will terminate the connection.
+
+# Python Example
+
+The example script tia_example.py was written against Python version 3.6.
+Convenient way to setup a 3.6 environment on Linux. https://linuxize.com/post/how-to-install-python-3-on-centos-7/
+
 
