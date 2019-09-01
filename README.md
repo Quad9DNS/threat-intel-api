@@ -8,7 +8,7 @@ threat-intel-api is an HTTP/Websocket service that allows threat intelligence (T
 Contact Quad9 at support@quad9.net if you are a threat intelligence provider and need a key. 
 
 Clients will access the api via a websocket.
-Clients will be given the url of the websocket (https://tiapi.quad9.net) and an authorization token.
+Clients need the url of the websocket (https://tiapi.quad9.net) and an authorization token.
 
 If a client has multiple threat lists they will be given a separate token for each list.
 
