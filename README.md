@@ -78,7 +78,7 @@ Convenient way to setup a 3.6 environment on Linux. https://linuxize.com/post/ho
  
  To see the data being retrieved:
  
- my_project_venv) [exampleuser@commandline]$  ./tia_example.py    --auth_token <YOUR TOKEN>  --verbose
+ (my_project_venv) [exampleuser@commandline]$  ./tia_example.py    --auth_token <YOUR TOKEN>  --verbose
  {'id': '191960005', 'qname': 'blockeddomain.example.com', 'qtype': 'A', 'timestamp': '2018-12-11T03:15:47.038932839Z', 'city': 'San Jose', 'region': 'CA', 'country': 'US'}
  {'id': '191961005', 'qname': 'blockeddomain.example.com', 'qtype': 'A', 'timestamp': '2018-12-11T03:15:47.051392978Z', 'city': 'San Jose', 'region': 'CA', 'country': 'US'}
  {'id': '191962005', 'qname': 'blockeddomain.example.com', 'qtype': 'A', 'timestamp': '2018-12-11T03:15:47.0605273Z', 'city': 'San Jose', 'region': 'CA', 'country': 'US'}
