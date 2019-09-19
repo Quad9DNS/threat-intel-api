@@ -53,7 +53,7 @@ qname = domain that the user queried for
 qtype = type of DNS record 
 timestamp = time/date of the query 
 city = city that the query originated from (or closest with the minimum population), can be blank
-region = region that the query originated from, an be blank
+region = region that the query originated from, can be blank
 country = two character country code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)that the query originated from, can be blank
 
 Note: We use MaxMind for geographic lookups but we snap locations to the center of the closest city that is above the minimum population - it never moves out of a region (typically a country or nation) but you will not get granular geographic information for small cities. This is to ensure end user privacy.
