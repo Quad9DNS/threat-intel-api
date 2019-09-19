@@ -12,7 +12,6 @@ Clients need the url of the websocket (https://tiapi.quad9.net) and an authoriza
 
 If a client has multiple threat lists they will be given a separate token for each list.
 
-If a client has multiple threat lists they will be given a separate token for each list.
 
 
 # Starting a Session
