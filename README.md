@@ -35,7 +35,7 @@ If a client fails to acknowledge the messages they receive, in-order, the API wi
 
 # Simple Curl Example
 
-curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13" -H "Authorization: Token <YOUR TOKEN>"  https://tiapi.quad9.net >> output.txt
+curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13" -H "Authorization: Token <THE_ACTUAL_TOKEN>"  https://tiapi.quad9.net >> output.txt
 
 If it is working you will see output like:
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
