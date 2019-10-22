@@ -19,7 +19,7 @@ Clients initiate their session by making an HTTP GET request to the service. The
 
 `HTTP/``1.1`  `GET /`
 
-`Authorization: Token <THE_ACTUAL_TOKEN>`
+`Authorization: Token <YOUR_TOKEN>`
 
 When the client supplies a valid, active token, their connection will be "upgraded" to a Websocket.
 
@@ -33,9 +33,13 @@ threat-intel-api was written with the following business rules in place:
 
 If a client fails to acknowledge the messages they receive, in-order, the API will terminate the connection.
 
+If you ack your messages and need a reset please contact support@quad9.net and we can reset you to 0. 
+
+There is currently no way for you to retrieve by date. We are working on it.
+
 # Simple Curl Example
 
-curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13" -H "Authorization: Token <THE_ACTUAL_TOKEN>"  https://tiapi.quad9.net >> output.txt
+curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13" -H "Authorization: Token <YOUR_TOKEN>"  https://tiapi.quad9.net >> output.txt
 
 If it is working you will see output like:
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -68,7 +72,7 @@ Convenient way to setup a 3.6 environment on Linux. https://linuxize.com/post/ho
  This measures download speed:
 
 
-(my_project_venv) [exampleuser@commandline]$  ./tia_example.py    --auth_token <YOUR TOKEN> 
+(my_project_venv) [exampleuser@commandline]$  ./tia_example.py    --auth_token <YOUR_TOKEN> 
  10000 8140.593486210115/sec
  20000 9139.962665341003/sec
  30000 9979.32015085066/sec
@@ -77,7 +81,7 @@ Convenient way to setup a 3.6 environment on Linux. https://linuxize.com/post/ho
  
  To see the data being retrieved:
  
- (my_project_venv) [exampleuser@commandline]$  ./tia_example.py    --auth_token <YOUR TOKEN>  --verbose
+ (my_project_venv) [exampleuser@commandline]$  ./tia_example.py    --auth_token <YOUR_TOKEN>  --verbose
  {'id': '191960005', 'qname': 'blockeddomain.example.com', 'qtype': 'A', 'timestamp': '2018-12-11T03:15:47.038932839Z', 'city': 'San Jose', 'region': 'CA', 'country': 'US'}
  {'id': '191961005', 'qname': 'blockeddomain.example.com', 'qtype': 'A', 'timestamp': '2018-12-11T03:15:47.051392978Z', 'city': 'San Jose', 'region': 'CA', 'country': 'US'}
  {'id': '191962005', 'qname': 'blockeddomain.example.com', 'qtype': 'A', 'timestamp': '2018-12-11T03:15:47.0605273Z', 'city': 'San Jose', 'region': 'CA', 'country': 'US'}
