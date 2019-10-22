@@ -25,7 +25,7 @@ import argparse
 
 async def readblockloop():
     async with websockets.connect(args.connect_url,
-            extra_headers={'Authorization': "YOUR TOKEN" + args.auth_token}) as ws:
+            extra_headers={'Authorization': Token "YOUR TOKEN" + args.auth_token}) as ws:
 
 
         global websocket
@@ -84,7 +84,7 @@ def main():
                         help='Disable acks so no data is confirmed read. Primarily for testing')
 
     # Optional arguments
-    parser.add_argument('--auth_token', default="<YOUR TOKEN>",
+    parser.add_argument('--auth_token', default="Token <YOUR TOKEN>",
                         help='Authorization token from quad9 to access the api')
 
     parser.add_argument('--connect_url', default='wss://tiapi.quad9.net',
