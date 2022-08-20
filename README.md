@@ -41,6 +41,9 @@ There is currently no way for you to retrieve by date. We are working on it.
 
 curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13" -H "Authorization: Token <YOUR_TOKEN>"  https://tiapi.quad9.net >> output.txt
 
+curl --output - -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13" -H "Authorization: Token <YOUR_TOKEN>" https://tiapi.quad9.net/
+
+
 If it is working you will see output like:
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
