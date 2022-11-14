@@ -1,0 +1,7 @@
+ti_url: "wss://tiapi.quad9.net"
+auth_token: ""
+data_file: /output/stream.json
+log_file: /output/tiapi.log
+verbose: true
+nolog: false
+noack: false
