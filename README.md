@@ -83,7 +83,7 @@ Example single entry:
 - `region` = region that the query originated from, can be blank
 - `country` = two character country code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) that the query originated from, can be blank
 
-*_Note: We use MaxMind for geographic lookups but we snap locations to the center of the closest city that is above the minimum population - it never moves out of a region (typically a country or nation) but you will not get granular geographic information for small cities. This is to ensure end user privacy._*
+*_Note: We have multiple sources for geographic data, but we snap/blur locations to the center of the closest city that is above the minimum population - it never moves out of a region (typically a country or nation) but you will not get granular geographic information for small cities. This is to ensure end user privacy._*
 
 # Python Example
 
