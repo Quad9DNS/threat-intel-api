@@ -1,71 +1,79 @@
 #!/usr/bin/env python
 
+#
+# Connect to the Quad9 threat-intel api and receive domain block information
+# You receive the auth_token from Quad9 and it is specific to a threat feed.
+#
+# Requires Python version 3.8 or greater.
+#
+# usage:
+#     ./tia_example.py --config <YOUR CONFIG FILE>
+#
+# set verbose: true to see the data being retrieved.
+
+# @author: Emilia Cebrat-Maslowski (Quad9)
+
+import os
+import logging 
 import asyncio
 import websockets
 import json
+import yaml
 import sys
 import os
 import time
 import argparse
 
-#
-# Connect to the Quad9 threat-intel api and receive domain block information
-# You receive the auth_token from Quad9 and it is specific to a threat feed.
-#
-# Requires Python version 3.6 or greater
-#
-# usage:
-#     ./tia_example.py  --auth_token <YOUR TOKEN>
-#         This measures download speed
-#
-#     ./tia_example.py  --verbose  --auth_token <YOUR TOKEN>
-#         To see the data being retrieved.
+from aiofile import async_open
+from collections import namedtuple
 
 
+def read_config(config_path):
+    with open(config_path, 'r') as f:
+          parsed_file = yaml.safe_load(f)
+    Config = namedtuple("Config", "ti_url auth_token data_file log_file verbose nolog noack")
+    config = Config(
+ 		parsed_file['ti_url'], 
+		parsed_file['auth_token'], 
+		parsed_file['data_file'],
+		parsed_file['log_file'],
+		parsed_file['verbose'], 
+		parsed_file['nolog'], 
+		parsed_file['noack']
+	     )
+    return config
 
-async def readblockloop():
-    async with websockets.connect(args.connect_url,
-            extra_headers={'Authorization': Token "YOUR TOKEN" + args.auth_token}) as ws:
 
+async def readblockloop(config, events):
+   
+    async with websockets.connect(config.ti_url,
+            extra_headers={'Authorization': "Token " + config.auth_token}) as ws:
 
         global websocket
-        count = 0
-        start = time.perf_counter()
-
         websocket = ws
 
         while True:
             try:
                 message = await websocket.recv()
-                #print(f" {message}")
-                data = json.loads(message)
-                if args.verbose:
-                    print(f" {data}")
+                if config.verbose:
+                    print(f" {message}")
 
-                # We do our processing here. Just a count
-                count = count + 1
-                if (count % 10000 == 0):
-                    end = time.perf_counter()
-                    print(f' {count} {count/(end-start)}/sec')
-
-                ack = dict(id=data['id'])
-
-                if not args.noack:
-                    await acks.put(ack)
-                #print(f" acks: {acks}")
+                if not config.nolog:
+                    await events.put(message)
             except:
-                print('Failed to receive message')
-                break
+                logging.debug('Failed to receive message')
+                await asyncio.sleep(1)
 
 
-async def process_acks():
+async def process_acks(acks):
     while True:
         ack = await acks.get()
 
         try:
+            logging.debug(f"ACKing: {ack}")
             await send_data(ack)
         except:
-            print('Failed to send ack')
+            logging.debug('Failed to send ack')
             break
 
 
@@ -73,38 +81,37 @@ async def send_data(data):
     frame = json.dumps(data)
     await websocket.send(frame)
 
+async def process_events(config, events, acks):
+    while True:
+        async with async_open(config.data_file, "a") as f:
+            event = await events.get()
+            await f.write(event)
+            if not config.noack:
+                event_parsed = json.loads(event)
+                ack = dict(id=event_parsed['id'])
+                await acks.put(ack)
+
+
 def main():
-    # Instantiate the parser
+
     parser = argparse.ArgumentParser(description='Read from Quad9 threat-intel api')
-
-    parser.add_argument('--verbose', action='store_true',
-                        help='Dump out received json')
-
-    parser.add_argument('--noack', action='store_true',
-                        help='Disable acks so no data is confirmed read. Primarily for testing')
-
-    # Optional arguments
-    parser.add_argument('--auth_token', default="Token <YOUR TOKEN>",
-                        help='Authorization token from quad9 to access the api')
-
-    parser.add_argument('--connect_url', default='wss://tiapi.quad9.net',
-                        help='url to access the api')
-
-
-    global args
+    parser.add_argument('--config', required=True, 
+                        help='Path to the config file.')
     args = parser.parse_args()
-
-
-
-    tasks = [
-        asyncio.ensure_future(readblockloop()),
-        asyncio.ensure_future(process_acks()),
-    ]
-
-    global acks
+    config = read_config(args.config)
+    logging.basicConfig(filename=config.log_file, level=logging.INFO, format='%(message)s')
+    loop = asyncio.get_event_loop()
     acks = asyncio.Queue()
+    events = asyncio.Queue()
 
-    asyncio.get_event_loop().run_until_complete(asyncio.wait(tasks))
+    try:
+        loop.create_task(readblockloop(config, events))
+        loop.create_task(process_events(config, events, acks))
+        loop.create_task(process_acks(acks))
+        loop.run_forever()
+    finally:
+        loop.close()
+
 
 
 if __name__ == '__main__':
