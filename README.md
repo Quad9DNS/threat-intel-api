@@ -34,7 +34,7 @@ threat-intel-api was written with the following business rules in place:
 Clients initiate their session by making an HTTP GET request to the service. There is only one endpoint: "/". In this initial request, the client is expected to provide a "bearer" token in the `Authorization` header, like so:
 
 ```http
-HTTP/``1.1 GET /
+HTTP/1.1 GET /
 Authorization: Token <YOUR_TOKEN>
 ```
 
