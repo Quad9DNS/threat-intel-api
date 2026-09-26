@@ -13,7 +13,7 @@ Client software will access the API via a websocket. If a client has multiple th
 
 ## Requirements
 Clients need:
-- the URL of the websocket (https://tiapi.quad9.net/(PLUS URL PATH PROVIDED BY QUAD9 PER PROVIDER LIST)
+- the URL of the websocket (https://tiapi.quad9.net/ (PLUS URL PATH SUFFIX PROVIDED BY QUAD9 PER PROVIDER LIST)
 - authentication credentials (username/password) supplied by Quad9
 - a streaming websocket client or client library that supports TLS-encrypted websocket feeds (wss:)
 
