@@ -26,7 +26,7 @@ threat-intel-api was written with the following business rules in place:
 - multiple TI providers may supply an identical domain name; each will get an independent copy of the event data
 - data is delivered in JSON format
 - data is streamed in near-realtime (typically less than 5 seconds from end-to-end)
-- events are queued in a ring buffer, up to 100000 events in the buffer. If the client disconnects, it is possible to pick back up without message loss as long as no more than 100000 events have transpired since disconnect and the reconnection includes the last successfully received message-id.
+- events are queued in a ring buffer, up to 10000 events in the buffer. If the client disconnects, it is possible to pick back up without message loss as long as no more than 10000 events have transpired since disconnect and the reconnection includes the last successfully received message-id.
 - clients may connect without specifying a "last-seen" item, and the newest events and onwards will be delivered
 
 
